@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="flex w-full max-w-[500px] mx-auto h-screen">
-      <!-- <slot /> -->
+      <slot />
     </div>
 
     <div 
@@ -22,14 +22,14 @@
         </button>
 
         <button
-          @click="useStore.isMenuIverlay = true"
+          @click="userStore.isMenuIverlay = true"
           class="w-full h-full"
         >
           <Icon class="mb-1" name="material-symbols:edit-square-outline-rounded" size="35" color="#fff"/>
         </button>
 
         <button
-          @click="useStore.isLogoutOverlay = true"
+          @click="userStore.isLogoutOverlay = true"
           class="w-full h-full"
         >
           <Icon class="mb-1" name="ph:sign-out" size="35" color="#fff"/>
@@ -42,6 +42,6 @@
 
 <script setup>
 import { useUserStore } from "~/stores/user"
-const useStore = useUserStore()
+const userStore = useUserStore()
 
 </script>
