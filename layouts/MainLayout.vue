@@ -22,7 +22,7 @@
         </button>
 
         <button
-          @click="userStore.isMenuIverlay = true"
+          @click="userStore.isMenuOverlay = true"
           class="w-full h-full"
         >
           <Icon class="mb-1" name="material-symbols:edit-square-outline-rounded" size="35" color="#fff"/>
