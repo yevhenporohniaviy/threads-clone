@@ -66,6 +66,7 @@ import { useUserStore } from '~/stores/user';
       </div>
       <button
         v-if="text"
+        @click="createPost"
         :disabled="isLoading"
         class="fixed bottom-0 font-bold text-lg w-full bg-black inline-block float-right p-4 border-t bordet-t-gray-700 "
         :class="isLoading ? 'text-gray-600' : 'text-blue-600'"
@@ -75,7 +76,7 @@ import { useUserStore } from '~/stores/user';
           v-else
           class="flex items-center gap-2 justify-center"
         >
-          <Icon name="eos-icons:bubble-laoding" size="25"/>
+          <Icon name="eos-icons:bubble-loading" size="25"/>
           Please wait ...
         </div>
       </button>
@@ -113,6 +114,55 @@ const clearData = () => {
 const onChange = () => {
   fileDisplay.value = URL.createObjectURL(file.value.files[0])
   fileData.value = file.value.files[0]
+}
+
+const createPost = async () => {
+  let dataOut = null;
+  let errorOut = null;
+
+  isLoading.value = true
+
+  if (fileData.value) {
+    const { data, error } = await client
+      .storage
+      .from('threads-c-bucket')
+      .upload(`${uuidv4()}.jpg`, fileData.value)
+
+    dataOut = data;
+    errorOut = error;
+  }
+
+  if (errorOut) {
+    console.log(errorOut)
+    return errorOut
+  }
+
+  let pic = ''
+  if (dataOut) {
+    pic = dataOut.path ? dataOut.path : ''
+  }
+
+  try {
+    await useFetch(`/api/create-post/`, {
+      method: 'POST',
+      body: {
+        userId: user.value.identities[0].user_id,
+        name: user.value.identities[0].identity_data.full_name,
+        image: user.value.identities[0].identity_data.avatar_url,
+        text: text.value,
+        picture: pic,
+      }
+    })
+
+    await userStore.getAllPosts()
+    userStore.isMenuOverlay = false
+
+    clearData()
+    isLoading.value = false
+  } catch (error) {
+    console.log(error)
+    isLoading.value = false
+  }
 }
 </script>
 
