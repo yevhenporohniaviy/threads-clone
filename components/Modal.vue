@@ -10,7 +10,7 @@
       </button>
       <div class="border-b border-b-gray-700 my-1"/>
       <button
-          @click="userStore.isLogoutOverlay = false"
+          @click="logout()"
           class="flex items-center justify-between bg-black w-full p-3"
         >
           <div >Log Out</div>
@@ -23,12 +23,12 @@
 <script setup>
 import { useUserStore } from '~/stores/user'
 const userStore = useUserStore()
-// const client = useSupabaseClient()
+const client = useSupabaseClient()
 
-// const logout = () => {
-//   client.auth.logout()
-//   userStore.isLogoutOverlay = false
-//   return navigateTo('/')
-// }
+const logout = () => {
+  client.auth.logout()
+  userStore.isLogoutOverlay = false
+  return navigateTo('/')
+}
 
 </script>
