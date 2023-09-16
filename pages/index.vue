@@ -18,11 +18,17 @@ import MainLayout from '~/layouts/MainLayout.vue';
 import Posts from '~/components/Posts.vue';
 import { useUserStore } from '~/stores/user'
 const userStore = useUserStore()
-// const user = useSupabaseUser()
+const user = useSupabaseUser()
 
 let posts = ref([]);
 let isPosts = ref(true);
 let isLoading = ref(false);
+
+watchEffect(() => {
+  if (!user.value) {
+    return navigateTo('/auth')
+  }
+})
 
 onBeforeMount(() => {
   posts.value = [
