@@ -1,6 +1,15 @@
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+### Setup .env file
+```js
+SUPABASE_URL=
+SUPABASE_KEY=
+BUCKET_URL=
+
+# This was inserted by `prisma init`
+DATABASE_URL="postgres://postgres:Fantomgod_240@db.gjagqoluktjmeiuejflo.supabase.co:5432/postgres"
+```
 
 ## Setup
 
